@@ -2,6 +2,7 @@ import { useMemo, useRef, useState } from "react"
 import Header from "@/components/header/Header"
 import SearchBar from "@/components/search/SearchBar"
 import UserList from "@/components/list/UserList"
+import { useDebouncedValue } from "@/hooks/useDebouncedValue"
 import { useGithubUserSearch } from "@/hooks/useGithubUserSearch"
 import type { CardItem } from "@/types/ui"
 import "./App.css"
@@ -25,15 +26,16 @@ function App() {
   const [editMode, setEditMode] = useState(true)
   const duplicateCounter = useRef(0)
 
-  const { users, status, error } = useGithubUserSearch(query)
+  const debouncedQuery = useDebouncedValue(query, 350)
+  const { users, status, error } = useGithubUserSearch(debouncedQuery)
 
   const baseItems = useMemo(
     () =>
       users.map((user) => ({
-        localId: `${query}-${user.id}`,
+        localId: `${debouncedQuery}-${user.id}`,
         user
       })),
-    [users, query]
+    [users, debouncedQuery]
   )
 
   const items = useMemo(() => {
@@ -111,7 +113,7 @@ function App() {
           allSelected={allSelected}
           status={status}
           errorMessage={error}
-          query={query}
+          query={debouncedQuery}
           isEditMode={editMode}
           onToggleEditMode={setEditMode}
           onToggleSelection={toggleSelection}

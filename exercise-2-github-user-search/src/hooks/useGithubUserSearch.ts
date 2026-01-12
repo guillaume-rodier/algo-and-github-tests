@@ -3,8 +3,6 @@ import { searchGithubUsers } from "@/api/github"
 import type { GithubUser } from "@/types/github"
 import type { RequestStatus } from "@/types/ui"
 
-const SEARCH_DELAY_MS = 350
-
 export function useGithubUserSearch(query: string) {
   const [users, setUsers] = useState<GithubUser[]>([])
   const [status, setStatus] = useState<RequestStatus>("idle")
@@ -12,52 +10,60 @@ export function useGithubUserSearch(query: string) {
 
   const requestCounter = useRef(0)
   const activeController = useRef<AbortController | null>(null)
+  const trimmedQuery = query.trim()
 
   useEffect(() => {
-    const trimmed = query.trim()
-    if (!trimmed) {
+    if (!trimmedQuery) {
       activeController.current?.abort()
-      setUsers([])
-      setStatus("idle")
-      setError(null)
       return
     }
 
-    const timeout = window.setTimeout(() => {
-      requestCounter.current += 1
-      const requestId = requestCounter.current
+    requestCounter.current += 1
+    const requestId = requestCounter.current
 
-      activeController.current?.abort()
-      const controller = new AbortController()
-      activeController.current = controller
+    activeController.current?.abort()
+    const controller = new AbortController()
+    activeController.current = controller
+
+    const runRequest = async () => {
+      await Promise.resolve()
+      if (controller.signal.aborted) {
+        return
+      }
+      if (requestCounter.current !== requestId) {
+        return
+      }
 
       setStatus("loading")
       setError(null)
 
-      searchGithubUsers(trimmed, controller.signal)
-        .then((items) => {
-          if (requestCounter.current !== requestId) {
-            return
-          }
-          setUsers(items)
-          setStatus("success")
-        })
-        .catch((err: unknown) => {
-          if (controller.signal.aborted) {
-            return
-          }
-          if (requestCounter.current !== requestId) {
-            return
-          }
-          const message =
-            err instanceof Error ? err.message : "Unable to reach Github."
-          setError(message)
-          setStatus("error")
-        })
-    }, SEARCH_DELAY_MS)
+      try {
+        const items = await searchGithubUsers(trimmedQuery, controller.signal)
+        if (requestCounter.current !== requestId) {
+          return
+        }
+        setUsers(items)
+        setStatus("success")
+      } catch (err: unknown) {
+        if (controller.signal.aborted) {
+          return
+        }
+        if (requestCounter.current !== requestId) {
+          return
+        }
+        const message =
+          err instanceof Error ? err.message : "Unable to reach Github."
+        setError(message)
+        setStatus("error")
+      }
+    }
 
-    return () => window.clearTimeout(timeout)
-  }, [query])
+    void runRequest()
+  }, [trimmedQuery])
 
-  return { users, status, error }
+  return {
+    users: trimmedQuery ? users : [],
+    status: trimmedQuery ? status : "idle",
+    error: trimmedQuery ? error : null,
+  }
 }

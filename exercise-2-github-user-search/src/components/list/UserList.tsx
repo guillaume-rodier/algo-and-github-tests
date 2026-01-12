@@ -121,9 +121,6 @@ export default function UserList({
               Start typing to search Github users.
             </p>
           )}
-          {status === "loading" && (
-            <p className="status-message">Fetching Github profiles...</p>
-          )}
           {status === "error" && errorMessage && (
             <p className="status-message status-message--error">
               {errorMessage}
@@ -145,6 +142,13 @@ export default function UserList({
             />
           ))}
         </div>
+
+        {status === "loading" && (
+          <div className="results-overlay" role="status" aria-live="polite">
+            <span className="spinner" aria-hidden="true" />
+            <span className="visually-hidden">Fetching Github profiles...</span>
+          </div>
+        )}
       </div>
     </section>
   )
