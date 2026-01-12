@@ -5,6 +5,12 @@ const nRaw = process.argv[2];
 // Convert the input to a number
 const n = Number(nRaw);
 
+if (!Number.isInteger(n) || n <= 0) {
+  console.error("Usage: npm run fizzbuzz -- <positive integer>");
+  console.error("Limit must be a positive integer");
+  process.exit(1);
+}
+
 // Execute the FizzBuzz function
 const result = fizzBuzz(n);
 
