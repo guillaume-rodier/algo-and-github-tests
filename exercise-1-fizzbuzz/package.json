@@ -4,20 +4,16 @@
   "description": "fizzbuzz is a classical exercise for algo",
   "license": "UNLICENSED",
   "author": "Guillaume Rodier",
-  "type": "commonjs",
+  "type": "module",
   "directories": {
     "test": "tests"
   },
   "scripts": {
-    "fizzbuzz": "node -r ts-node/register -r tsconfig-paths/register src/cli.ts",
+    "fizzbuzz": "node src/cli.js",
     "test": "vitest",
     "test:run": "vitest run"
   },
   "devDependencies": {
-    "@types/node": "^25.0.5",
-    "ts-node": "^10.9.2",
-    "tsconfig-paths": "^4.2.0",
-    "typescript": "^5.9.3",
     "vitest": "^4.0.16"
   }
 }

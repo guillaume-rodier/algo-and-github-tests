@@ -1,7 +1,7 @@
 # Exercises workspace
 
 This repository contains two exercises:
-- `exercise-1-fizzbuzz`: CLI-based FizzBuzz with tests (TypeScript, Node.js, Vitest).
+- `exercise-1-fizzbuzz`: CLI-based FizzBuzz with tests (JavaScript, Vitest).
 - `exercise-2-github-user-search`: React app to search Github users with tests (TypeScript, React, Vite, Vitest).
 
 They live in separate folders to keep each exercise self-contained (own tooling,

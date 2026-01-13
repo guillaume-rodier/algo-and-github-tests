@@ -1,7 +1,7 @@
 # Exercise 1 - FizzBuzz
 
 ## Description
-FizzBuzz implementation in TypeScript, with configurable rules and unit tests.
+FizzBuzz implementation in JavaScript, with configurable rules and unit tests.
 
 ## Rules
 - multiple of 3: Fizz
@@ -28,7 +28,7 @@ npm run fizzbuzz -- 15
 You can provide your own rules via the second argument.
 
 Example object:
-```ts
+```js
 const rules = [
   { divisor: 2, label: "Foo" },
   { divisor: 7, label: "Bar" },
@@ -47,11 +47,7 @@ npm run test:run
 ```
 
 ## Structure
-- src/fizzbuzz.ts: FizzBuzz logic
-- src/rules.ts: default rules
-- src/types.ts: shared types
-- src/cli.ts: command-line execution
-- tests/fizzbuzz.test.ts: unit tests
-
-## Notes
-- The `@/*` alias is configured in `tsconfig.json` and resolved at runtime by `tsconfig-paths`.
+- src/fizzbuzz.js: FizzBuzz logic
+- src/rules.js: default rules
+- src/cli.js: command-line execution
+- tests/fizzbuzz.test.js: unit tests
