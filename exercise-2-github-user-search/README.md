@@ -1,73 +1,56 @@
-# React + TypeScript + Vite
+# Exercise 2 - Github User Search
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Overview
+Single-page React app that searches Github users and displays results as cards.
+The UI supports selection, duplication, and deletion of cards, with clear loading
+and empty states. The search input is debounced to avoid excessive API calls.
 
-Currently, two official plugins are available:
+## Features
+- Search Github users with a debounced input.
+- Request lifecycle: idle, loading, success, error.
+- Cards list with select-all, duplicate, and delete actions.
+- Edit mode toggle to enable/disable selection and actions.
+- Loading overlay and user-friendly empty/error messages.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Tech stack
+- TypeScript
+- React 19
+- Vite
+- Vitest + Testing Library
 
-## React Compiler
+## Project structure
+- `src/api/github.ts`: API call to Github search endpoint.
+- `src/hooks/useGithubUserSearch.ts`: data fetching and request state.
+- `src/hooks/useDebouncedValue.ts`: debounce hook for the query input.
+- `src/components/`: UI components (search bar, list, cards, header).
+- `src/tests/`: unit and integration tests.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Scripts
+From this folder:
+```
+npm install
+npm run dev
+npm run build
+npm run preview
+npm run test
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+From the repo root, you can also use:
 ```
+npm run install:all
+npm run test:ex2
+npm run start:ex2
+```
+
+## Usage
+1) Start the dev server with `npm run dev`.
+2) Type a username in the search bar.
+3) Use edit mode to select cards, then duplicate or delete them.
+
+## Tests
+- Unit tests cover hooks and UI behavior.
+- Run the full test suite with `npm run test -- --run`.
+
+## Notes
+- The list height adapts to the viewport via flex layout in `src/App.css`.
+- The request guard prevents stale responses from overwriting recent results.
