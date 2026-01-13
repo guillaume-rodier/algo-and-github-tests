@@ -7,6 +7,7 @@ import { useGithubUserSearch } from "@/hooks/useGithubUserSearch"
 import type { CardItem } from "@/types/ui"
 import "./App.css"
 
+// Generate unique ids for local-only cards, with a fallback if crypto is missing.
 const createLocalId = (() => {
   let counter = 0
   return () => {
@@ -38,6 +39,7 @@ function App() {
     [users, debouncedQuery]
   )
 
+  // Merge API results and local duplicates, then remove any deleted cards.
   const items = useMemo(() => {
     const deletedSet = new Set(deletedIds)
     const filteredBase = baseItems.filter(
@@ -53,16 +55,19 @@ function App() {
   const selectedCount = selectedIds.length
   const allSelected = items.length > 0 && selectedCount === items.length
 
+  // Toggle selection state for a given card id.
   const toggleSelection = (id: string) => {
     setSelectedIds((prev) =>
       prev.includes(id) ? prev.filter((value) => value !== id) : [...prev, id]
     )
   }
 
+  // Select or deselect all cards.
   const handleSelectAll = (checked: boolean) => {
     setSelectedIds(checked ? items.map((item) => item.localId) : [])
   }
 
+  // Duplicate selected cards with new local ids to keep React keys unique.
   const handleDuplicate = () => {
     if (selectedCount === 0) {
       return
@@ -81,6 +86,7 @@ function App() {
     })
   }
 
+  // Mark selected cards as deleted.
   const handleDelete = () => {
     if (selectedCount === 0) {
       return
@@ -93,6 +99,7 @@ function App() {
     setSelectedIds([])
   }
 
+  // Reset local UI state when starting a new search query.
   const handleSearchChange = (value: string) => {
     setQuery(value)
     setSelectedIds([])
