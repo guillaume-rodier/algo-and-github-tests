@@ -1,0 +1,12 @@
+{
+  "name": "my-github-profil-research",
+  "private": true,
+  "scripts": {
+    "install:all": "npm --prefix exercise-1-fizzbuzz install && npm --prefix exercise-2-github-user-search install",
+    "test:ex1": "npm --prefix exercise-1-fizzbuzz run test:run",
+    "test:ex2": "npm --prefix exercise-2-github-user-search run test -- --run",
+    "test:all": "npm run test:ex1 && npm run test:ex2",
+    "start:ex1": "npm --prefix exercise-1-fizzbuzz run fizzbuzz",
+    "start:ex2": "npm --prefix exercise-2-github-user-search run dev"
+  }
+}

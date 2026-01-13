@@ -1,0 +1,20 @@
+.app-header {
+  height: 64px;
+  background: #9b9790;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Space Grotesk", "Segoe UI", sans-serif;
+  letter-spacing: 0.08em;
+}
+
+.app-header h1 {
+  font-size: 1.3rem;
+  margin: 0;
+}
+
+@media (max-width: 520px) {
+  .app-header h1 {
+    font-size: 1.05rem;
+  }
+}
