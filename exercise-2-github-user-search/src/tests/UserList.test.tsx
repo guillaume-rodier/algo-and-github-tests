@@ -45,7 +45,9 @@ describe("UserList", () => {
     )
 
     expect(screen.getByText("Edit mode is off")).toBeInTheDocument()
-    expect(screen.queryByLabelText("Select all")).not.toBeInTheDocument()
+    expect(
+      screen.queryByLabelText("Select all cards")
+    ).not.toBeInTheDocument()
     expect(
       screen.queryByLabelText("Duplicate selected cards")
     ).not.toBeInTheDocument()
@@ -73,7 +75,75 @@ describe("UserList", () => {
       />
     )
 
-    await user.click(screen.getByLabelText("Select all"))
+    await user.click(screen.getByLabelText("Select all cards"))
     expect(handleSelectAll).toHaveBeenCalledWith(true)
+  })
+
+  it("shows loading overlay when status is loading", () => {
+    render(
+      <UserList
+        items={items}
+        selectedIds={[]}
+        selectedCount={0}
+        allSelected={false}
+        status="loading"
+        errorMessage={null}
+        query="octo"
+        isEditMode={true}
+        onToggleEditMode={() => undefined}
+        onToggleSelection={() => undefined}
+        onSelectAll={() => undefined}
+        onDuplicate={() => undefined}
+        onDelete={() => undefined}
+      />
+    )
+
+    expect(
+      screen.getByText("Fetching Github profiles...")
+    ).toBeInTheDocument()
+  })
+
+  it("shows empty state when there are no results", () => {
+    render(
+      <UserList
+        items={[]}
+        selectedIds={[]}
+        selectedCount={0}
+        allSelected={false}
+        status="success"
+        errorMessage={null}
+        query="octo"
+        isEditMode={true}
+        onToggleEditMode={() => undefined}
+        onToggleSelection={() => undefined}
+        onSelectAll={() => undefined}
+        onDuplicate={() => undefined}
+        onDelete={() => undefined}
+      />
+    )
+
+    expect(screen.getByText("No results for this search.")).toBeInTheDocument()
+  })
+
+  it("disables select all when there are no items", () => {
+    render(
+      <UserList
+        items={[]}
+        selectedIds={[]}
+        selectedCount={0}
+        allSelected={false}
+        status="success"
+        errorMessage={null}
+        query="octo"
+        isEditMode={true}
+        onToggleEditMode={() => undefined}
+        onToggleSelection={() => undefined}
+        onSelectAll={() => undefined}
+        onDuplicate={() => undefined}
+        onDelete={() => undefined}
+      />
+    )
+
+    expect(screen.getByLabelText("Select all cards")).toBeDisabled()
   })
 })
