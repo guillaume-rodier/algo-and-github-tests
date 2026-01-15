@@ -7,10 +7,14 @@ and empty states. The search input is debounced to avoid excessive API calls.
 
 ## Features
 - Search Github users with a debounced input.
-- Request lifecycle: idle, loading, success, error.
+- Request lifecycle states: idle, loading, success, error.
+- Rate limit feedback when Github API returns 403 with no remaining quota.
+- Stale request guard + abort to avoid race conditions on fast typing.
 - Cards list with select-all, duplicate, and delete actions.
 - Edit mode toggle to enable/disable selection and actions.
 - Loading overlay and user-friendly empty/error messages.
+- No pagination (current results are limited to the API's first page).
+- Tests for hooks and UI behavior.
 
 ## Tech stack
 - TypeScript

@@ -3,6 +3,7 @@
   "private": true,
   "scripts": {
     "install:all": "npm --prefix exercise-1-fizzbuzz install && npm --prefix exercise-2-github-user-search install",
+    "happy:path": "npm run install:all && npm run test:all",
     "test:ex1": "npm --prefix exercise-1-fizzbuzz run test:run",
     "test:ex2": "npm --prefix exercise-2-github-user-search run test -- --run",
     "test:all": "npm run test:ex1 && npm run test:ex2",
