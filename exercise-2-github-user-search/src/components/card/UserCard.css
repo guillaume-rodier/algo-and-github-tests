@@ -1,19 +1,27 @@
 .user-card {
-  background: #d8d4cc;
-  border-radius: 8px;
-  width: 100px;
-  padding: 1rem 0.6rem 0.75rem;
-  box-shadow: 5px 4px 3px rgba(25, 22, 19, 0.4);
+  background: var(--surface-strong);
+  border-radius: 16px;
+  width: min(180px, 100%);
+  padding: 1.1rem 0.9rem 0.9rem;
+  box-shadow: var(--card-shadow);
   position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 0.75rem;
   border: 2px solid transparent;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  animation: card-rise 0.35s ease forwards;
 }
 
 .user-card:hover {
   transform: translateY(-2px);
+  box-shadow: 0 18px 30px rgba(25, 22, 19, 0.2);
+}
+
+.user-card.is-selected {
+  border-color: rgba(10, 163, 159, 0.6);
+  box-shadow: 0 16px 30px rgba(10, 163, 159, 0.2);
 }
 
 .card-checkbox {
@@ -25,18 +33,18 @@
 .card-checkbox input {
   width: 16px;
   height: 16px;
-  accent-color: #0b98f0;
+  accent-color: var(--accent);
   background-color: transparent;
-  border: 2px solid #1b1a17;
+  border: 2px solid var(--text);
 }
 
 .user-card__avatar {
-  width: 52px;
-  height: 52px;
+  width: 58px;
+  height: 58px;
   border-radius: 50%;
   overflow: hidden;
-  border: 3px solid rgba(9, 138, 137, 0.65);
-  background: radial-gradient(circle at top, #1dd8d2, #047070);
+  border: 3px solid rgba(10, 163, 159, 0.65);
+  background: radial-gradient(circle at top, #30e0d9, #0b7e7a);
 }
 
 .user-card__info {
@@ -48,7 +56,7 @@
   margin: 0;
   font-weight: 700;
   font-size: 0.75rem;
-  color: rgba(27, 26, 23, 0.7);
+  color: rgba(27, 26, 23, 0.6);
   letter-spacing: 0.04em;
   white-space: nowrap;
   overflow: hidden;
@@ -58,7 +66,7 @@
 .user-card__login {
   margin: 0;
   font-family: "Space Grotesk", "Segoe UI", sans-serif;
-  font-size: 0.8rem;
+  font-size: 0.82rem;
   font-weight: 600;
   width: 100%;
   max-width: 100%;
@@ -69,20 +77,22 @@
 
 .user-card__button {
   display: inline-block;
-  padding: 0.4rem 0.6rem;
-  border-radius: 6px;
-  background: #0b98f0;
-  color: #111111;
+  padding: 0.45rem 0.75rem;
+  border-radius: 10px;
+  background: var(--accent);
+  color: #0b0b0b;
   font-weight: 600;
   font-size: 0.75rem;
   margin-top: 0.35rem;
-  box-shadow: 0 4px 8px rgba(12, 65, 92, 0.18);
+  box-shadow: 0 6px 12px rgba(12, 65, 92, 0.18);
   text-align: center;
   white-space: nowrap;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
 }
 
 .user-card__button:hover {
-  background: #067ccd;
+  background: var(--accent-strong);
+  transform: translateY(-1px);
 }
 
 @keyframes card-rise {
@@ -98,6 +108,7 @@
 
 @media (max-width: 520px) {
   .user-card {
+    width: min(220px, 100%);
     padding: 1.25rem 1rem;
   }
 }

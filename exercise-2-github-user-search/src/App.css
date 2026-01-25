@@ -9,13 +9,14 @@
   height: 100dvh;
   display: flex;
   flex-direction: column;
+  background: transparent;
 }
 
 .app-content {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
-  padding: 0 1.5rem 2rem;
+  gap: 1.75rem;
+  padding: 0 1.75rem 2.5rem;
   flex: 1;
   min-height: 0;
 }
